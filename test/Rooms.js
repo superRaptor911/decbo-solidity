@@ -7,7 +7,30 @@ async function addRooms(contract, count) {
     await contract.addRoom(
       config.addresses[0],
       "Raptors mansion",
-      "c-12/14 sector 71 noida, UP",
+      "Noida",
+      "UP",
+      "India",
+    );
+  }
+}
+
+
+function randi(till) {
+  return Math.floor(Math.random() * till);
+}
+
+async function addRoomsRandom(contract, count) {
+  const names = ["raptor mansion", "tharavad", "kottaram", "chinnaveddu", "kalliveddu"];
+  const cities = ["Noida", "Kollam", "Kannur", "Kottayam", "Bangalore", "Delhi"];
+  const states = ["UP", "Delhi", "Kerala", "Maharashtra", "Orissa", "Assam"];
+
+  for (let i = 0; i < count; i++) {
+    await contract.addRoom(
+      config.addresses[0],
+      names[randi(names.length)],
+      cities[randi(cities.length)],
+      states[randi(states.length)],
+      "India",
     );
   }
 }
@@ -18,7 +41,9 @@ contract('Rooms', () => {
     await contract.addRoom(
       config.addresses[0],
       "Raptors mansion",
-      "c-12/14 sector 71 noida, UP",
+      "Noida",
+      "UP",
+      "India",
     );
   });
 
@@ -28,7 +53,9 @@ contract('Rooms', () => {
     await contract.addRoom(
       config.addresses[0],
       "Raptors mansion",
-      "c-12/14 sector 71 noida, UP",
+      "Noida",
+      "UP",
+      "India",
     );
 
     const result = await contract.getRoom(0);
@@ -68,23 +95,17 @@ contract('Rooms', () => {
   });
 
 
-  it('Should list rooms by search query', async () => {
+  it('Should list rooms by city query', async () => {
     const contract = await Rooms.new();
-    await contract.addRoom(
-      config.addresses[0],
-      "Raptors mansion",
-      "c-12/14 sector 71 noida, UP",
-    );
+    await addRoomsRandom(contract, 10); 
+    const result = await contract.getRoomsInCity("Noida");
+    console.log(result)
+  });
 
-    await contract.addRoom(
-      config.addresses[0],
-      "Raptors mansion",
-      "c-12/14 71 kollam, UP",
-    );
-    const result = await contract.searchRooms(
-      "kollam sector",
-      0
-    );
+  it('Should list rooms by state query', async () => {
+    const contract = await Rooms.new();
+    await addRoomsRandom(contract, 10); 
+    const result = await contract.getRoomsInState("Kerala");
     console.log(result)
   });
 });

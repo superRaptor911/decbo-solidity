@@ -1,6 +1,24 @@
 pragma solidity ^0.8.3;
 
 library Utility {
+    
+    function strcmp(string calldata s1, string calldata s2) public pure returns(bool) {
+        bytes memory str1 = bytes(s1);
+        bytes memory str2 = bytes(s2);
+
+        if (str1.length != str2.length) {
+            return false;
+        }
+
+        for(uint i = 0; i < str1.length; i++) {
+            if (str1[i] != str2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     // Get sub string match level
     function geStrMatchLevel(
         string calldata str,

@@ -1,6 +1,4 @@
 pragma solidity ^0.8.3;
-
-
 import "./lib/Utility.sol";
 
 contract Rooms {
@@ -9,7 +7,9 @@ contract Rooms {
         uint id;
         address seller;
         string name;
-        string fullAddress;
+        string city;
+        string state;
+        string country;
         bool isValid;
     }
 
@@ -25,18 +25,62 @@ contract Rooms {
     }
 
     // Add a new room
-    function addRoom(address seller, string calldata name, string calldata fullAddress) external {
+    function addRoom(
+        address seller,
+        string calldata name,
+        string calldata city,
+        string calldata state,
+        string calldata country
+    ) external {
         uint id = roomCount;
-        Room memory room = Room(id, seller, name, fullAddress, true);
+        Room memory room = Room(id, seller, name, city, state, country, true);
         roomCount++;
         rooms[id] = room;
     }
 
-    // List rooms by search criteria
-    function searchRooms(
-        string calldata query, uint page)
-        external view returns (Room[] memory filteredRooms) {
-            return mGetSearchResults(query, page);
+    // Get rooms in city
+    function getRoomsInCity(string calldata city) external view returns (
+        Room[] memory) {
+        // Array to hold Id's of rooms in the city
+        uint[] memory ids = new uint[](roomCount);
+        uint index = 0;
+        for(uint i = 0; i < roomCount; i++) {
+            if (Utility.strcmp(city, rooms[i].city)) {
+                ids[index] = i;
+                index++;
+            }
+        }
+
+        // Allocate memory for Rooms
+        Room[] memory roomsInCity = new Room[](index);
+        // Add rooms
+        for(uint i = 0; i < index; i++) {
+            roomsInCity[i] = rooms[ids[i]];
+        }
+        return roomsInCity;
+    }
+
+
+    // Get rooms in State
+    function getRoomsInState(string calldata state) external view returns (
+        Room[] memory) {
+        // Array to hold Id's of rooms in the state
+        uint[] memory ids = new uint[](roomCount);
+        uint index = 0;
+        for(uint i = 0; i < roomCount; i++) {
+            if (Utility.strcmp(state, rooms[i].state)) {
+                ids[index] = i;
+                index++;
+            }
+        }
+
+        // Allocate memory for Rooms
+        Room[] memory roomsInState = new Room[](index);
+        // Add rooms
+        for(uint i = 0; i < index; i++) {
+            roomsInState[i] = rooms[ids[i]];
+        }
+        return roomsInState;
     }
 
     // Get Latest Rooms
@@ -54,36 +98,5 @@ contract Rooms {
             list[end - i] = rooms[i - 1];
         }
         return list;
-    }
-
-
-    function mGetSearchResults(
-        string calldata query,
-        uint page
-    ) private view returns(Room[] memory) {
-        uint[] memory matchlevels = new uint[](roomCount);
-        uint resultCount = 0;
-
-        for(uint i = 0; i < roomCount; i++) {
-            uint matchLevel = Utility.geStrMatchLevel(
-                rooms[i].fullAddress,
-                query
-            );
-            matchlevels[i] = matchLevel;
-            if (matchLevel > 0) {
-                resultCount++;
-            }
-        }
-
-        // Utility.sortUintArr(matchlevels, false);
-        Room[] memory results = new Room[](resultCount);
-        uint index = 0;
-        for(uint i = 0; i < roomCount; i++) {
-            if (matchlevels[i] != 0) {
-                results[index] = rooms[i]; 
-                index++;
-            }
-        }
-        return results;
     }
 }
