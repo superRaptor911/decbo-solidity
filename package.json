@@ -5,6 +5,6 @@
   },
   "scripts": {
       "test": "truffle test --network gananche",
-      "build": "truffle migrate --reset --network gananche"
+      "build": "truffle migrate --reset --network gananche && ./contractMin"
   }
 }

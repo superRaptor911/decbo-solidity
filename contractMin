@@ -1,6 +1,8 @@
 #!/usr/bin/node
 
-var fs = require('fs');
+console.log("Executing minimising script");
+
+const fs = require('fs');
 fs.readdir("./build/contracts/", (err, files) => {
     if (err) {
         return console.log('Unable to scan directory: ' + err);
@@ -25,7 +27,6 @@ fs.readdir("./build/contracts/", (err, files) => {
           } else {
             console.log(`${file} is written successfully!`);
           }
-
         });
       }
     });

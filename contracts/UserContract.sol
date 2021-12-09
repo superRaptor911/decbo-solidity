@@ -6,7 +6,6 @@ contract UserContact {
         string username;
         string email;
         string phone;
-        string password;
         bool isValid; 
     }
 
@@ -24,8 +23,7 @@ contract UserContact {
         address userAddr,
         string calldata name, 
         string calldata email,
-        string calldata phone,
-        string calldata password
+        string calldata phone
     ) external {
         require(users[userAddr].isValid == false ,
                 "User already registered");
@@ -35,7 +33,6 @@ contract UserContact {
             name,
             email,
             phone,
-            password,
             true
         );
     }
