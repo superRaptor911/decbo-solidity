@@ -11,7 +11,9 @@ contract UserContact {
 
     mapping(address => User) users;
 
-    function getUser(address userAddr) external view returns (User memory usr) {
+    function getUser(address userAddr) external view returns (
+        User memory usr
+    ) {
         usr = users[userAddr];
         require(usr.isValid == true, "User not registered");
         return usr;
@@ -23,7 +25,9 @@ contract UserContact {
         string calldata _email,
         string calldata _password
     ) external {
-        require(users[userAddr].isValid == false , "User already registered");
+        require(users[userAddr].isValid == false ,
+                "User already registered");
+
         users[userAddr] = User(
             userAddr,
             name,
