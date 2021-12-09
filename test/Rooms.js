@@ -1,10 +1,11 @@
 const Rooms = artifacts.require('Rooms.sol');
 const truffleAssert = require('truffle-assertions');
+const config = require('./config.json');
 
 async function addRooms(contract, count) {
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
-      "0xd5AAa73e6895fb7c887b3fA1f8232b7494d7D67F",
+      config.addresses[0],
       "Raptors mansion",
       "c-12/14 sector 71 noida, UP",
     );
@@ -15,7 +16,7 @@ contract('Rooms', () => {
   it('Should add room', async () => {
     const contract = await Rooms.new();
     await contract.addRoom(
-      "0xd5AAa73e6895fb7c887b3fA1f8232b7494d7D67F",
+      config.addresses[0],
       "Raptors mansion",
       "c-12/14 sector 71 noida, UP",
     );
@@ -25,7 +26,7 @@ contract('Rooms', () => {
   it('Should get room', async () => {
     const contract = await Rooms.new();
     await contract.addRoom(
-      "0xd5AAa73e6895fb7c887b3fA1f8232b7494d7D67F",
+      config.addresses[0],
       "Raptors mansion",
       "c-12/14 sector 71 noida, UP",
     );
@@ -78,13 +79,13 @@ contract('Rooms', () => {
   it('Should list rooms by search query', async () => {
     const contract = await Rooms.new();
     await contract.addRoom(
-      "0xd5AAa73e6895fb7c887b3fA1f8232b7494d7D67F",
+      config.addresses[0],
       "Raptors mansion",
       "c-12/14 sector 71 noida, UP",
     );
 
     await contract.addRoom(
-      "0xd5AAa73e6895fb7c887b3fA1f8232b7494d7D67F",
+      config.addresses[0],
       "Raptors mansion",
       "c-12/14 71 kollam, UP",
     );
