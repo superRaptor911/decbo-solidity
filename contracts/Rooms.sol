@@ -33,22 +33,14 @@ contract Rooms {
     }
 
     // List rooms by search criteria
-    // filterType 1 latest, 2 
-    function listRooms(
-        uint filterType,
+    function searchRooms(
         string calldata query, uint page)
         external view returns (Room[] memory filteredRooms) {
-        require(filterType <= 2, "Invalid filter option");
-
-        if (filterType == 0) {
-            return mGetSearchResults(query);
-        }
-        // Latest
-        return mGetLatest(page);
+            return mGetSearchResults(query, page);
     }
 
     // Get Latest Rooms
-    function mGetLatest(uint page) view private returns (Room[] memory){
+    function getLatestRooms(uint page) view external returns (Room[] memory){
         uint offset = 32 * page;                // Offset, i.e starting point
         uint end = 32 + offset;                 // end
 
@@ -65,30 +57,33 @@ contract Rooms {
     }
 
 
-    function mGetSearchResults( string calldata query) private view returns(Room[] memory) {
-            uint[] memory matchlevels = new uint[](roomCount);
-            uint resultCount = 0;
+    function mGetSearchResults(
+        string calldata query,
+        uint page
+    ) private view returns(Room[] memory) {
+        uint[] memory matchlevels = new uint[](roomCount);
+        uint resultCount = 0;
 
-            for(uint i = 0; i < roomCount; i++) {
-                uint matchLevel = Utility.geStrMatchLevel(
-                    rooms[i].fullAddress,
-                    query
-                );
-                matchlevels[i] = matchLevel;
-                if (matchLevel > 0) {
-                    resultCount++;
-                }
+        for(uint i = 0; i < roomCount; i++) {
+            uint matchLevel = Utility.geStrMatchLevel(
+                rooms[i].fullAddress,
+                query
+            );
+            matchlevels[i] = matchLevel;
+            if (matchLevel > 0) {
+                resultCount++;
             }
+        }
 
-            // Utility.sortUintArr(matchlevels, false);
-            Room[] memory results = new Room[](resultCount);
-            uint index = 0;
-            for(uint i = 0; i < roomCount; i++) {
-                if (matchlevels[i] != 0) {
-                    results[index] = rooms[i]; 
-                    index++;
-                }
+        // Utility.sortUintArr(matchlevels, false);
+        Room[] memory results = new Room[](resultCount);
+        uint index = 0;
+        for(uint i = 0; i < roomCount; i++) {
+            if (matchlevels[i] != 0) {
+                results[index] = rooms[i]; 
+                index++;
             }
-            return results;
+        }
+        return results;
     }
 }

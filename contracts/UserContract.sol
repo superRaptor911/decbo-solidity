@@ -5,6 +5,7 @@ contract UserContact {
         address id;
         string username;
         string email;
+        string phone;
         string password;
         bool isValid; 
     }
@@ -22,8 +23,9 @@ contract UserContact {
     function addUser(
         address userAddr,
         string calldata name, 
-        string calldata _email,
-        string calldata _password
+        string calldata email,
+        string calldata phone,
+        string calldata password
     ) external {
         require(users[userAddr].isValid == false ,
                 "User already registered");
@@ -31,8 +33,9 @@ contract UserContact {
         users[userAddr] = User(
             userAddr,
             name,
-            _email,
-            _password,
+            email,
+            phone,
+            password,
             true
         );
     }

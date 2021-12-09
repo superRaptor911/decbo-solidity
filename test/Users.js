@@ -9,6 +9,7 @@ contract('UserContact', () => {
       config.addresses[0],
       "Raptor",
       "raptor@gmail.com",
+      "8505908858",
       "intel"
     );
     // assert(true);
@@ -20,6 +21,7 @@ contract('UserContact', () => {
       config.addresses[0],
       "Raptor",
       "raptor@gmail.com",
+      "8505908858",
       "intel"
     );
 
@@ -27,6 +29,7 @@ contract('UserContact', () => {
       config.addresses[0],
       "Raptor",
       "raptor@gmail.com",
+      "8505908858",
       "intel"
     );
   });
@@ -38,6 +41,7 @@ contract('UserContact', () => {
       config.addresses[0],
       "Raptor",
       "raptor@gmail.com",
+      "8505908858",
       "intel"
     );
 

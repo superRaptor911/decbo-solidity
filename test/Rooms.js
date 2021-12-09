@@ -55,11 +55,7 @@ contract('Rooms', () => {
   it('Should list rooms by latest', async () => {
     const contract = await Rooms.new();
     await addRooms(contract, 3);
-    const result = await contract.listRooms(
-      1,
-      "",
-      0
-    );
+    const result = await contract.getLatestRooms(0);
     console.log(result)
   });
 
@@ -67,11 +63,7 @@ contract('Rooms', () => {
   it('Should list rooms by latest with pagination', async () => {
     const contract = await Rooms.new();
     await addRooms(contract, 35);
-    const result = await contract.listRooms(
-      1,
-      "",
-      1
-    );
+    const result = await contract.getLatestRooms(1);
     console.log(result)
   });
 
@@ -89,8 +81,7 @@ contract('Rooms', () => {
       "Raptors mansion",
       "c-12/14 71 kollam, UP",
     );
-    const result = await contract.listRooms(
-      0,
+    const result = await contract.searchRooms(
       "kollam sector",
       0
     );
