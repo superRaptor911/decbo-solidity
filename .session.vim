@@ -8,20 +8,23 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +23 contracts/Voting.sol
-badd +11 ~/program/dapps/truffleTest/contracts/SimpleStorage.sol
-badd +0 ~/program/dapps/truffleTest/migrations/2_deploy_contracts.js
+badd +44 contracts/Voting.sol
+badd +11 contracts/SimpleStorage.sol
+badd +3 migrations/2_deploy_contracts.js
+badd +1 contracts/UserContract.sol
+badd +81 contracts/Rooms.sol
+badd +56 lib/StringMan.sol
 argglobal
 %argdel
-edit ~/program/dapps/truffleTest/migrations/2_deploy_contracts.js
+edit contracts/Rooms.sol
 argglobal
-balt ~/program/dapps/truffleTest/contracts/SimpleStorage.sol
-let s:l = 4 - ((3 * winheight(0) + 22) / 45)
+balt lib/StringMan.sol
+let s:l = 83 - ((40 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 0
+keepjumps 83
+normal! 029|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
