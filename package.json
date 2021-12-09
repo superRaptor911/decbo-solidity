@@ -4,6 +4,7 @@
     "truffle-assertions": "^0.9.2"
   },
   "scripts": {
-      "test": "truffle test --network gananche"
+      "test": "truffle test --network gananche",
+      "build": "truffle migrate --reset --network gananche"
   }
 }
