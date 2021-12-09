@@ -1,6 +1,7 @@
 pragma solidity ^0.8.3;
 
-import "../lib/StringMan.sol";
+
+import "./lib/Utility.sol";
 
 contract Rooms {
     // Room Struct
@@ -14,12 +15,12 @@ contract Rooms {
 
     mapping(uint => Room) rooms;
     // Number of rooms in contract
-    uint roomCount = 0;
+    uint public roomCount = 0;
 
     // Get room by id
     function getRoom(uint id) external view returns (Room memory room) {
+        require(id < roomCount, "Room not found");
         room = rooms[id];
-        require(room.isValid == true, "Room not found");
         return room;
     }
 
@@ -48,17 +49,17 @@ contract Rooms {
 
     // Get Latest Rooms
     function mGetLatest(uint page) view private returns (Room[] memory){
-        // Max results = 32, so allocate 32
-        Room[] memory list = new Room[](32);
         uint offset = 32 * page;                // Offset, i.e starting point
         uint end = 32 + offset;                 // end
 
         require(offset < roomCount, "No more rooms");   // check if offset > roomcount
         end = end > roomCount ? roomCount : end;        // end should not be more than room count
 
+        // Max results = 32, so allocate 32
+        Room[] memory list = new Room[](end - offset);
         // Backward Loop
-        for(uint i = end; i >= offset; i--) {
-            list[i - 32 - offset] = rooms[i - 1];
+        for(uint i = end; i > offset; i--) {
+            list[end - i] = rooms[i - 1];
         }
         return list;
     }
