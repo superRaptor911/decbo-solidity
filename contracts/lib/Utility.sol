@@ -1,7 +1,6 @@
 pragma solidity ^0.8.3;
 
 library Utility {
-    
     function strcmp(string calldata s1, string calldata s2) public pure returns(bool) {
         bytes memory str1 = bytes(s1);
         bytes memory str2 = bytes(s2);

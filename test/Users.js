@@ -10,7 +10,6 @@ contract('UserContact', () => {
       "Raptor",
       "raptor@gmail.com",
       "8505908858",
-      "intel"
     );
     // assert(true);
   });
@@ -22,7 +21,6 @@ contract('UserContact', () => {
       "Raptor",
       "raptor@gmail.com",
       "8505908858",
-      "intel"
     );
 
     await contract.addUser(
@@ -30,7 +28,6 @@ contract('UserContact', () => {
       "Raptor",
       "raptor@gmail.com",
       "8505908858",
-      "intel"
     );
   });
 
@@ -42,7 +39,6 @@ contract('UserContact', () => {
       "Raptor",
       "raptor@gmail.com",
       "8505908858",
-      "intel"
     );
 
     const result = await contract.getUser(

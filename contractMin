@@ -8,8 +8,8 @@ fs.readdir("./build/contracts/", (err, files) => {
         return console.log('Unable to scan directory: ' + err);
     } 
 
+  fs.mkdir("./build/contracts/contracts/", ()=> {});
   files.forEach((file) => {
-
     fs.readFile(`./build/contracts/${file}`, 'utf8', (err, data) => {
       if (err) {
         console.log(`Error reading file from disk: ${err}`);
@@ -21,7 +21,7 @@ fs.readdir("./build/contracts/", (err, files) => {
         }
 
         data = JSON.stringify(minContract);
-        fs.writeFile(`./build/contracts/${file}`, data, 'utf8', (err) => {
+        fs.writeFile(`./build/contracts/contracts/${file}`, data, 'utf8', (err) => {
           if (err) {
             console.log(`Error writing file: ${err}`);
           } else {

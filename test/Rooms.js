@@ -5,7 +5,6 @@ const config = require('./config.json');
 async function addRooms(contract, count) {
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
-      config.addresses[0],
       "Raptors mansion",
       "Noida",
       "UP",
@@ -13,7 +12,6 @@ async function addRooms(contract, count) {
     );
   }
 }
-
 
 function randi(till) {
   return Math.floor(Math.random() * till);
@@ -26,7 +24,6 @@ async function addRoomsRandom(contract, count) {
 
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
-      config.addresses[0],
       names[randi(names.length)],
       cities[randi(cities.length)],
       states[randi(states.length)],
@@ -39,7 +36,6 @@ contract('Rooms', () => {
   it('Should add room', async () => {
     const contract = await Rooms.new();
     await contract.addRoom(
-      config.addresses[0],
       "Raptors mansion",
       "Noida",
       "UP",
@@ -51,7 +47,6 @@ contract('Rooms', () => {
   it('Should get room', async () => {
     const contract = await Rooms.new();
     await contract.addRoom(
-      config.addresses[0],
       "Raptors mansion",
       "Noida",
       "UP",

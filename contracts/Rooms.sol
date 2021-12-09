@@ -26,14 +26,13 @@ contract Rooms {
 
     // Add a new room
     function addRoom(
-        address seller,
         string calldata name,
         string calldata city,
         string calldata state,
         string calldata country
     ) external {
         uint id = roomCount;
-        Room memory room = Room(id, seller, name, city, state, country, true);
+        Room memory room = Room(id, msg.sender, name, city, state, country, true);
         roomCount++;
         rooms[id] = room;
     }
