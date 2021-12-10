@@ -8,7 +8,7 @@ contract('UserContact', () => {
     await contract.addUser(
       config.addresses[0],
       "Raptor",
-      "raptor@gmail.com",
+     "raptor@gmail.com",
       "8505908858",
     );
     // assert(true);

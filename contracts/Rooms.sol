@@ -37,6 +37,19 @@ contract Rooms {
         rooms[id] = room;
     }
 
+    // Update room
+    function updateRoom(
+        uint id,
+        string calldata name,
+        string calldata city,
+        string calldata state,
+        string calldata country
+    ) external {
+        require(rooms[id].isValid, "Room does not exist");
+        require(rooms[id].seller == msg.sender, "Only owner can modify");
+        rooms[id] = Room(id, msg.sender, name, city, state, country, true);
+    }
+
     // Get rooms in city
     function getRoomsInCity(string calldata city) external view returns (
         Room[] memory) {
