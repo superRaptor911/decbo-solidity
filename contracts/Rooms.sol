@@ -48,11 +48,16 @@ contract Rooms {
         uint id = roomCount;
         roomCount++;
         Room memory room;
+
         room.id = id;
         room.seller = msg.sender;
         room.name = name;
-
-        rooms[id] = Room(id, msg.sender, name, city, state, country, description, capacity, true);
+        room.city = city;
+        room.state = state;
+        room.description = description;
+        room.capacity = capacity;
+        room.isValid = true;
+        rooms[id] = room;
     }
 
     // Update room
