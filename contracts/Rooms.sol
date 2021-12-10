@@ -57,10 +57,15 @@ contract Rooms {
         room.name = name;
         room.city = city;
         room.state = state;
+        room.country = country;
         room.description = description;
         room.capacity = capacity;
         room.isValid = true;
         rooms[id] = room;
+    }
+    
+    function addMedia(uint id, File[5] calldata files) external {
+        
     }
 
     // Update room
@@ -82,6 +87,7 @@ contract Rooms {
         room.name = name;
         room.city = city;
         room.state = state;
+        room.country = country;
         room.description = description;
         room.capacity = capacity;
         room.isValid = true;
