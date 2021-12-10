@@ -1,4 +1,5 @@
 pragma solidity ^0.8.3;
+
 import "./lib/Utility.sol";
 
 contract Rooms {
@@ -10,6 +11,8 @@ contract Rooms {
         string city;
         string state;
         string country;
+        string description;
+        uint capacity;
         bool isValid;
     }
 
@@ -29,12 +32,13 @@ contract Rooms {
         string calldata name,
         string calldata city,
         string calldata state,
-        string calldata country
+        string calldata country,
+        string calldata description,
+        uint capacity
     ) external {
         uint id = roomCount;
-        Room memory room = Room(id, msg.sender, name, city, state, country, true);
         roomCount++;
-        rooms[id] = room;
+        rooms[id] = Room(id, msg.sender, name, city, state, country, description, capacity, true);
     }
 
     // Update room
@@ -43,11 +47,13 @@ contract Rooms {
         string calldata name,
         string calldata city,
         string calldata state,
-        string calldata country
+        string calldata country,
+        string calldata description,
+        uint capacity
     ) external {
         require(rooms[id].isValid, "Room does not exist");
         require(rooms[id].seller == msg.sender, "Only owner can modify");
-        rooms[id] = Room(id, msg.sender, name, city, state, country, true);
+        rooms[id] = Room(id, msg.sender, name, city, state, country, description, capacity, true);
     }
 
     // Get rooms in city
