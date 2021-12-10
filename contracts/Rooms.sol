@@ -21,7 +21,11 @@ contract Rooms {
         uint capacity;
         uint price;
 
-        File[5] previewImages;
+        File previewImage1;
+        File previewImage2;
+        File previewImage3;
+        File previewImage4;
+        File previewImage5;
         bool isValid;
     }
 
@@ -48,7 +52,6 @@ contract Rooms {
         uint id = roomCount;
         roomCount++;
         Room memory room;
-
         room.id = id;
         room.seller = msg.sender;
         room.name = name;
@@ -72,7 +75,18 @@ contract Rooms {
     ) external {
         require(rooms[id].isValid, "Room does not exist");
         require(rooms[id].seller == msg.sender, "Only owner can modify");
-        rooms[id] = Room(id, msg.sender, name, city, state, country, description, capacity, true);
+
+        Room memory room;
+        room.id = id;
+        room.seller = msg.sender;
+        room.name = name;
+        room.city = city;
+        room.state = state;
+        room.description = description;
+        room.capacity = capacity;
+        room.isValid = true;
+        rooms[id] = room;
+
     }
 
     // Get rooms in city
