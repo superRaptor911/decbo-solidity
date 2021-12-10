@@ -1,8 +1,9 @@
 #!/usr/bin/node
 
+const config = require("./test/config.json")
 console.log("Executing minimising script");
 
-const fs = require('fs');
+const fs = require('fs-extra');
 fs.readdir("./build/contracts/", (err, files) => {
     if (err) {
         return console.log('Unable to scan directory: ' + err);
@@ -32,3 +33,9 @@ fs.readdir("./build/contracts/", (err, files) => {
     });
   });
 });
+
+
+console.log("Coping contracts ..")
+
+fs.rmdir(config.frontendPath + "src/contracts", () => {})
+fs.copy("./build/contracts/contracts", config.frontendPath + "src/contracts");
