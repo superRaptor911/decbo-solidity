@@ -9,6 +9,8 @@ async function addRooms(contract, count) {
       "Noida",
       "UP",
       "India",
+      "desc",
+      4
     );
   }
 }
@@ -28,6 +30,8 @@ async function addRoomsRandom(contract, count) {
       cities[randi(cities.length)],
       states[randi(states.length)],
       "India",
+      "desc",
+      4
     );
   }
 }
@@ -35,24 +39,12 @@ async function addRoomsRandom(contract, count) {
 contract('Rooms', () => {
   it('Should add room', async () => {
     const contract = await Rooms.new();
-    await contract.addRoom(
-      "Raptors mansion",
-      "Noida",
-      "UP",
-      "India",
-    );
+    await addRoomsRandom(contract, 1);
   });
-
 
   it('Should get room', async () => {
     const contract = await Rooms.new();
-    await contract.addRoom(
-      "Raptors mansion",
-      "Noida",
-      "UP",
-      "India",
-    );
-
+    await addRoomsRandom(contract, 1);
     const result = await contract.getRoom(0);
     console.log(result);
   });
