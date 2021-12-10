@@ -7,6 +7,7 @@ contract Rooms {
         uint fileId;
         string fileHash;
         uint fileSize;
+        string fileType;
     }
 
     // Room Struct
@@ -63,9 +64,17 @@ contract Rooms {
         room.isValid = true;
         rooms[id] = room;
     }
-    
+
+    // Function to add media
     function addMedia(uint id, File[5] calldata files) external {
-        
+        require(rooms[id].isValid, "Room does not exist");
+        require(rooms[id].seller == msg.sender, "Only owner can modify");
+
+        rooms[id].previewImage1 = files[0];
+        rooms[id].previewImage2 = files[1];
+        rooms[id].previewImage3 = files[2];
+        rooms[id].previewImage4 = files[3];
+        rooms[id].previewImage5 = files[4];
     }
 
     // Update room
@@ -92,8 +101,8 @@ contract Rooms {
         room.capacity = capacity;
         room.isValid = true;
         rooms[id] = room;
-
     }
+
 
     // Get rooms in city
     function getRoomsInCity(string calldata city) external view returns (

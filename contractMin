@@ -4,14 +4,14 @@ const config = require("./test/config.json")
 console.log("Executing minimising script");
 
 const fs = require('fs-extra');
-fs.readdir("./build/contracts/", (err, files) => {
+fs.readdirSync("./build/contracts/", (err, files) => {
     if (err) {
         return console.log('Unable to scan directory: ' + err);
     } 
 
-  fs.mkdir("./build/contracts/contracts/", ()=> {});
+  fs.mkdirSync("./build/contracts/contracts/", ()=> {});
   files.forEach((file) => {
-    fs.readFile(`./build/contracts/${file}`, 'utf8', (err, data) => {
+    fs.readFileSync(`./build/contracts/${file}`, 'utf8', (err, data) => {
       if (err) {
         console.log(`Error reading file from disk: ${err}`);
       } else {
@@ -22,7 +22,7 @@ fs.readdir("./build/contracts/", (err, files) => {
         }
 
         data = JSON.stringify(minContract);
-        fs.writeFile(`./build/contracts/contracts/${file}`, data, 'utf8', (err) => {
+        fs.writeFileSync(`./build/contracts/contracts/${file}`, data, 'utf8', (err) => {
           if (err) {
             console.log(`Error writing file: ${err}`);
           } else {
@@ -37,5 +37,5 @@ fs.readdir("./build/contracts/", (err, files) => {
 
 console.log("Coping contracts ..")
 
-fs.rmdir(config.frontendPath + "src/contracts", () => {})
-fs.copy("./build/contracts/contracts", config.frontendPath + "src/contracts");
+fs.rmdirSync(config.frontendPath + "src/contracts", () => {})
+fs.copySync("./build/contracts/contracts", config.frontendPath + "src/contracts");
