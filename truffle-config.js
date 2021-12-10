@@ -17,9 +17,9 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
+const config = require('./test/config.json');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const privateKeys = ['0x5340ee1f78e86a19c258c7ad946771c5d74059d99abdbde0f4c3f5c3eb18dbd9']; 
+const privateKeys = config.privateKeys;
 
 //
 // const fs = require('fs');
