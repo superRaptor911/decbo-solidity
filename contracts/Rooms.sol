@@ -3,6 +3,12 @@ pragma solidity ^0.8.3;
 import "./lib/Utility.sol";
 
 contract Rooms {
+    struct File {
+        uint fileId;
+        string fileHash;
+        uint fileSize;
+    }
+
     // Room Struct
     struct Room {
         uint id;
@@ -13,6 +19,9 @@ contract Rooms {
         string country;
         string description;
         uint capacity;
+        uint price;
+
+        File[5] previewImages;
         bool isValid;
     }
 
@@ -38,6 +47,11 @@ contract Rooms {
     ) external {
         uint id = roomCount;
         roomCount++;
+        Room memory room;
+        room.id = id;
+        room.seller = msg.sender;
+        room.name = name;
+
         rooms[id] = Room(id, msg.sender, name, city, state, country, description, capacity, true);
     }
 
