@@ -23,13 +23,7 @@ files.forEach((file) => {
     }
 
     data = JSON.stringify(minContract);
-    fs.writeFileSync(`./build/contracts/contracts/${file}`, data, 'utf8', (err) => {
-      if (err) {
-        console.log(`Error writing file: ${err}`);
-      } else {
-        console.log(`${file} is written successfully!`);
-      }
-    });
+    fs.writeFileSync(`./build/contracts/contracts/${file}`, data);
   }
 });
 
