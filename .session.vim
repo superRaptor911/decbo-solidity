@@ -12,21 +12,21 @@ badd +44 contracts/Voting.sol
 badd +11 contracts/SimpleStorage.sol
 badd +2 migrations/2_deploy_contracts.js
 badd +25 contracts/UserContract.sol
-badd +3 contracts/Rooms.sol
+badd +49 contracts/Rooms.sol
 badd +1 test/Users.js
 badd +111 test/Rooms.js
 badd +6 contracts/lib/Utility.sol
 badd +2 test/config.json
 argglobal
 %argdel
-edit contracts/UserContract.sol
+edit contracts/Rooms.sol
 argglobal
-balt contracts/Rooms.sol
-let s:l = 25 - ((24 * winheight(0) + 21) / 43)
+balt contracts/UserContract.sol
+let s:l = 11 - ((10 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 25
+keepjumps 11
 normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

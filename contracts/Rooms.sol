@@ -5,8 +5,6 @@ import "./lib/Utility.sol";
 contract Rooms {
     struct File {
         string path;
-        uint size;
-        string fileType;
     }
 
     // Room Struct
