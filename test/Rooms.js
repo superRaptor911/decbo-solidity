@@ -10,7 +10,8 @@ async function addRooms(contract, count) {
       "UP",
       "India",
       "desc",
-      4
+      4,
+      {path: "asdda"}
     );
   }
 }
@@ -31,7 +32,8 @@ async function addRoomsRandom(contract, count) {
       states[randi(states.length)],
       "India",
       "desc",
-      4
+      4,
+      {path: "asdda"}
     );
   }
 }

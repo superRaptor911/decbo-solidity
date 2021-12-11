@@ -23,6 +23,7 @@ contract Rooms {
         File previewImage2;
         File previewImage3;
         bool isValid;
+        bool isBooked;
     }
 
     mapping(uint => Room) rooms;
@@ -34,6 +35,21 @@ contract Rooms {
         require(id < roomCount, "Room not found");
         room = rooms[id];
         return room;
+    }
+
+    function isValidRoomAndNotBooked(uint id) external view returns (bool) {
+        return id < roomCount && !rooms[id].isBooked;
+    }
+
+    function bookRoom(uint id) external {
+        require(id < roomCount, "Room not found");
+        require(!rooms[id].isBooked, "Room already booked");
+        rooms[id].isBooked = true;
+    }
+
+    function unbookRoom(uint id) external {
+        require(id < roomCount, "Room not found");
+        rooms[id].isBooked = false;
     }
 
     // Add a new room
