@@ -4,9 +4,8 @@ import "./lib/Utility.sol";
 
 contract Rooms {
     struct File {
-        uint fileId;
-        string fileHash;
-        uint fileSize;
+        string path;
+        uint size;
         string fileType;
     }
 
@@ -25,8 +24,6 @@ contract Rooms {
         File previewImage1;
         File previewImage2;
         File previewImage3;
-        File previewImage4;
-        File previewImage5;
         bool isValid;
     }
 
@@ -48,7 +45,8 @@ contract Rooms {
         string calldata state,
         string calldata country,
         string calldata description,
-        uint capacity
+        uint capacity,
+        File memory file1
     ) external {
         uint id = roomCount;
         roomCount++;
@@ -63,18 +61,8 @@ contract Rooms {
         room.capacity = capacity;
         room.isValid = true;
         rooms[id] = room;
-    }
 
-    // Function to add media
-    function addMedia(uint id, File[5] calldata files) external {
-        require(rooms[id].isValid, "Room does not exist");
-        require(rooms[id].seller == msg.sender, "Only owner can modify");
-
-        rooms[id].previewImage1 = files[0];
-        rooms[id].previewImage2 = files[1];
-        rooms[id].previewImage3 = files[2];
-        rooms[id].previewImage4 = files[3];
-        rooms[id].previewImage5 = files[4];
+        rooms[id].previewImage1 = file1;
     }
 
     // Update room
