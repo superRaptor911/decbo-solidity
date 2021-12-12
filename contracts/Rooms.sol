@@ -3,25 +3,29 @@ pragma solidity ^0.8.3;
 import "./lib/Utility.sol";
 
 contract Rooms {
-    struct File {
-        string path;
+    struct Images {
+        string img1;
+        string img2;
+        string img3;
+    }
+
+    struct Address {
+        string city;
+        string state;
+        string country;
     }
 
     // Room Struct
     struct Room {
         uint id;
-        address seller;
         string name;
-        string city;
-        string state;
-        string country;
+        address seller;
+        Address roomAddress;
         string description;
         uint capacity;
         uint price;
 
-        File previewImage1;
-        File previewImage2;
-        File previewImage3;
+        Images images;
         bool isValid;
         bool isBooked;
     }
@@ -55,12 +59,11 @@ contract Rooms {
     // Add a new room
     function addRoom(
         string calldata name,
-        string calldata city,
-        string calldata state,
-        string calldata country,
+        Address calldata roomAddress,
         string calldata description,
         uint capacity,
-        File memory file1
+        uint price,
+        Images memory images
     ) external {
         uint id = roomCount;
         roomCount++;
@@ -68,25 +71,24 @@ contract Rooms {
         room.id = id;
         room.seller = msg.sender;
         room.name = name;
-        room.city = city;
-        room.state = state;
-        room.country = country;
+        room.roomAddress = roomAddress;
+
         room.description = description;
         room.capacity = capacity;
         room.isValid = true;
+        room.price = price;
+        room.images = images;
         rooms[id] = room;
 
-        rooms[id].previewImage1 = file1;
     }
 
     // Update room
     function updateRoom(
         uint id,
         string calldata name,
-        string calldata city,
-        string calldata state,
-        string calldata country,
+        Address calldata roomAddress,
         string calldata description,
+        uint price,
         uint capacity
     ) external {
         require(rooms[id].isValid, "Room does not exist");
@@ -96,15 +98,13 @@ contract Rooms {
         room.id = id;
         room.seller = msg.sender;
         room.name = name;
-        room.city = city;
-        room.state = state;
-        room.country = country;
+        room.roomAddress = roomAddress;
         room.description = description;
         room.capacity = capacity;
+        room.price = price;
         room.isValid = true;
         rooms[id] = room;
     }
-
 
     // Get rooms in city
     function getRoomsInCity(string calldata city) external view returns (
@@ -113,7 +113,7 @@ contract Rooms {
         uint[] memory ids = new uint[](roomCount);
         uint index = 0;
         for(uint i = 0; i < roomCount; i++) {
-            if (Utility.strcmp(city, rooms[i].city)) {
+            if (Utility.strcmp(city, rooms[i].roomAddress.city)) {
                 ids[index] = i;
                 index++;
             }
@@ -136,7 +136,7 @@ contract Rooms {
         uint[] memory ids = new uint[](roomCount);
         uint index = 0;
         for(uint i = 0; i < roomCount; i++) {
-            if (Utility.strcmp(state, rooms[i].state)) {
+            if (Utility.strcmp(state, rooms[i].roomAddress.state)) {
                 ids[index] = i;
                 index++;
             }

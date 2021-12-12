@@ -46,8 +46,6 @@ contract Bookings {
         uint roomId;
         uint price;
         Timings timings;
-        bool signedByBuyer;
-        bool signedBySeller;
         bool isValid; 
     }
     
@@ -74,7 +72,9 @@ contract Bookings {
         Timings calldata timings
     ) external {
         require(RoomsContract.isValidRoomAndNotBooked(roomId) == true ,
-        "Rood does not exists or is booked");
+            "Rood does not exists or is booked"
+        );
+
         RoomsContract.bookRoom(roomId);
         bookings[bookingsCount] = Booking(
             bookingsCount,
@@ -82,7 +82,46 @@ contract Bookings {
             msg.sender,
             roomId,
             price,
-            timings,false, true, true);
+            timings, true);
+        bookingsCount++;
+    }
 
+    function getPendingContractsSeller(
+        address seller
+    ) external view returns (Booking[] memory) {
+        uint[32] memory arr;
+
+        uint counter = 0;
+        for(uint i = 0; i < bookingsCount; i++) {
+            if (bookings[i].isValid && bookings[i].seller == seller) {
+                arr[counter] = i;
+                counter++;
+            }
+        }
+
+        Booking[] memory output = new Booking[](counter);
+        for(uint i = 0; i < counter; i++) {
+            output[i] = bookings[arr[i]];
+        }
+        return output;
+    }
+
+    function getPendingContractsBuyer(
+        address buyer
+    ) external view returns (Booking[] memory) {
+        uint[32] memory arr;
+        uint counter = 0;
+        for(uint i = 0; i < bookingsCount; i++) {
+            if (bookings[i].isValid && bookings[i].buyer == buyer) {
+                arr[counter] = i;
+                counter++;
+            }
+        }
+
+        Booking[] memory output = new Booking[](counter);
+        for(uint i = 0; i < counter; i++) {
+            output[i] = bookings[arr[i]];
+        }
+        return output;
     }
 }

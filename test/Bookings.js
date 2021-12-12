@@ -7,12 +7,11 @@ async function addRooms(contract, count) {
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
       "Raptors mansion",
-      "Noida",
-      "UP",
-      "India",
+      {city: "Noida", state: "UP", country: "India"},
       "desc",
       4,
-      {path: "asdda"}
+      100,
+      {img1: "asdda", img2: "asdda", img3: "asdda"}
     );
   }
 }
@@ -50,5 +49,33 @@ contract('Bookings', () => {
     })
 
     console.log(result)
+  });
+
+  it('Should list pending bookings', async () => {
+    const roomContract = await Rooms.new();
+    await addRooms(roomContract, 3);
+
+    const contract = await Bookings.new(roomContract.address);
+    await contract.createBooking(config.addresses[0], 0, 100, {
+      time_createdOn: 1000,
+      time_bookedFrom: 1000,
+      time_bookedTill: 1000,
+    })
+
+    await contract.createBooking(config.addresses[0], 1, 100, {
+      time_createdOn: 1000,
+      time_bookedFrom: 1000,
+      time_bookedTill: 1000,
+    })
+
+    await contract.createBooking(config.addresses[0], 2, 100, {
+      time_createdOn: 1000,
+      time_bookedFrom: 1000,
+      time_bookedTill: 1000,
+    })
+
+    const result = await contract.getPendingContractsBuyer(config.addresses[0])
+    console.log(result)
+    assert(result.length > 0)
   });
 });

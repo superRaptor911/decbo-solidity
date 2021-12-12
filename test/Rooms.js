@@ -6,12 +6,11 @@ async function addRooms(contract, count) {
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
       "Raptors mansion",
-      "Noida",
-      "UP",
-      "India",
+      {city: "Noida", state: "UP", country: "India"},
       "desc",
       4,
-      {path: "asdda"}
+      100,
+      {img1: "asdda", img2: "asdda", img3: "asdda"}
     );
   }
 }
@@ -28,12 +27,15 @@ async function addRoomsRandom(contract, count) {
   for (let i = 0; i < count; i++) {
     await contract.addRoom(
       names[randi(names.length)],
-      cities[randi(cities.length)],
-      states[randi(states.length)],
-      "India",
+      {
+        city:cities[randi(cities.length)],
+        state: states[randi(states.length)],
+        country: "India"
+      },
       "desc",
       4,
-      {path: "asdda"}
+      100,
+      {img1: "asdda", img2: "asdda", img3: "asdda"}
     );
   }
 }
